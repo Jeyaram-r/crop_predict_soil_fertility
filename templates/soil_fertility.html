@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soil Fertility Prediction</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #e8f5e9, #a5d6a7);
+      text-align: center;
+      padding-top: 70px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      display: inline-block;
+    }
+    h2 {
+      color: #2e7d32;
+    }
+    #fertility-result {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #33691e;
+    }
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #2e7d32;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    a:hover {
+      background-color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🌱 Soil Fertility Based on NPK</h2>
+    <p id="fertility-result">Checking fertility...</p>
+    <a href="/">⬅ Back to Home</a>
+  </div>
+
+  <script>
+    function classifyFertility(N, P, K) {
+      let n_level = N < 26 ? 0 : (N > 67 ? 2 : 1);
+      let p_level = P < 37 ? 0 : (P > 60 ? 2 : 1);
+      let k_level = K < 23 ? 0 : (K > 44 ? 2 : 1);
+      let avg = Math.round((n_level + p_level + k_level) / 3);
+      return ["Less Fertile", "Fertile", "Highly Fertile"][avg];
+    }
+
+    $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const N = parseFloat(urlParams.get("N")) || 0;
+      const P = parseFloat(urlParams.get("P")) || 0;
+      const K = parseFloat(urlParams.get("K")) || 0;
+
+      const fertility = classifyFertility(N, P, K);
+      $("#fertility-result").text("🌾 Soil Fertility: " + fertility);
+    });
+  </script>
+</body>
+</html>
