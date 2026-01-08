@@ -1,27 +1,138 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory
+from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory, session
 import numpy as np
 import joblib
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.secret_key = "final_year_secret_key"
 
-# Load trained models
+# -------------------------
+# LOAD ML MODELS
+# -------------------------
 crop_model = joblib.load("models/crop_model.pkl")
 crop_label_encoder = joblib.load("models/crop_label_encoder.pkl")
 crop_scaler = joblib.load("models/crop_scaler.pkl")
 
+# -------------------------
+# SIMPLE USER STORAGE (FOR PROJECT)
+# -------------------------
+users = []  # [{name,email,password,role}]
+
+# -------------------------
+# STATIC FILES
+# -------------------------
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory('static', filename)
 
+# -------------------------
+# LANDING PAGE
+# -------------------------
 @app.route('/')
-def home():
+def landing():
+    return render_template('auth/landing.html')
+
+# -------------------------
+# SIGNUP
+# -------------------------
+@app.route('/signup/<role>', methods=['GET', 'POST'])
+def signup(role):
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = generate_password_hash(request.form['password'])
+
+        users.append({
+            "name": name,
+            "email": email,
+            "password": password,
+            "role": role
+        })
+
+        return redirect(url_for('login', role=role))
+
+    return render_template('auth/signup.html', role=role)
+
+# -------------------------
+# LOGIN
+# -------------------------
+@app.route('/login/<role>', methods=['GET', 'POST'])
+def login(role):
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        for user in users:
+            if user['email'] == email and user['role'] == role:
+                if check_password_hash(user['password'], password):
+                    session['user'] = user['email']
+                    session['role'] = role
+
+                    if role == 'farmer':
+                        return redirect(url_for('crop_form'))
+                    else:
+                        return redirect(url_for('market_price'))
+
+        return "Invalid credentials", 401
+
+    return render_template('auth/login.html', role=role)
+
+# -------------------------
+# LOGOUT
+# -------------------------
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('landing'))
+
+# -------------------------
+# FARMER PAGES
+# -------------------------
+@app.route('/crop-form')
+def crop_form():
+    if session.get('role') != 'farmer':
+        return redirect(url_for('landing'))
     return render_template('crop_form.html')
 
+@app.route('/crop_result')
+def crop_result():
+    crop = request.args.get('crop', 'Unknown Crop')
+    image_url = request.args.get('image_url', '')
+    N = request.args.get('N')
+    P = request.args.get('P')
+    K = request.args.get('K')
+    return render_template('crop_result.html', crop=crop, image_url=image_url, N=N, P=P, K=K)
+
+@app.route('/predict_fertility')
+def predict_fertility():
+    if session.get('role') != 'farmer':
+        return redirect(url_for('landing'))
+    return render_template('soil_fertility.html')
+
+# -------------------------
+# VISITOR PAGE
+# -------------------------
+@app.route('/market-price')
+def market_price():
+    if session.get('role') != 'visitor':
+        return redirect(url_for('landing'))
+
+    prices = [
+        {"crop": "Rice", "market": "Chennai", "price": 42, "date": "Today"},
+        {"crop": "Wheat", "market": "Coimbatore", "price": 38, "date": "Today"},
+        {"crop": "Maize", "market": "Madurai", "price": 30, "date": "Today"}
+    ]
+
+    return render_template('visitor/market_price.html', prices=prices)
+
+# -------------------------
+# ML API (UNCHANGED)
+# -------------------------
 @app.route('/api/recommend_crop', methods=['POST'])
 def recommend_crop():
     try:
-        data = request.json  
+        data = request.json
 
         N = float(data['N'])
         P = float(data['P'])
@@ -46,24 +157,89 @@ def recommend_crop():
         image_url = url_for('serve_static', filename=f'crop_images/{image_filename}', _external=True)
 
         return jsonify({
-            "redirect_url": url_for('crop_result', crop=recommended_crop, image_url=image_url, N=N, P=P, K=K)
+            "redirect_url": url_for(
+                'crop_result',
+                crop=recommended_crop,
+                image_url=image_url,
+                N=N, P=P, K=K
+            )
         })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route('/crop_result')
-def crop_result():
-    crop = request.args.get('crop', 'Unknown Crop')
-    image_url = request.args.get('image_url', '')
-    N = request.args.get('N')
-    P = request.args.get('P')
-    K = request.args.get('K')
-    return render_template('crop_result.html', crop=crop, image_url=image_url, N=N, P=P, K=K)
-
-@app.route('/predict_fertility')
-def predict_fertility():
-    return render_template('soil_fertility.html')
-
+# -------------------------
+# RUN
+# -------------------------
 if __name__ == '__main__':
     app.run(debug=True)
+
+# from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory
+# import numpy as np
+# import joblib
+# import os
+
+# app = Flask(__name__)
+
+# # Load trained models
+# crop_model = joblib.load("models/crop_model.pkl")
+# crop_label_encoder = joblib.load("models/crop_label_encoder.pkl")
+# crop_scaler = joblib.load("models/crop_scaler.pkl")
+
+# @app.route('/static/<path:filename>')
+# def serve_static(filename):
+#     return send_from_directory('static', filename)
+
+# @app.route('/')
+# def home():
+#     return render_template('crop_form.html')
+
+# @app.route('/api/recommend_crop', methods=['POST'])
+# def recommend_crop():
+#     try:
+#         data = request.json  
+
+#         N = float(data['N'])
+#         P = float(data['P'])
+#         K = float(data['K'])
+#         temperature = float(data['temperature'])
+#         humidity = float(data['humidity'])
+#         pH = float(data['pH'])
+#         rainfall = float(data['rainfall'])
+
+#         input_features = np.array([[N, P, K, temperature, humidity, pH, rainfall]])
+#         input_features_scaled = crop_scaler.transform(input_features)
+
+#         predicted_label = crop_model.predict(input_features_scaled)[0]
+#         recommended_crop = crop_label_encoder.inverse_transform([predicted_label])[0]
+
+#         image_filename = f"{recommended_crop.lower()}.jpg"
+#         image_path = os.path.join("static/crop_images", image_filename)
+
+#         if not os.path.exists(image_path):
+#             image_filename = "not_found.jpg"
+
+#         image_url = url_for('serve_static', filename=f'crop_images/{image_filename}', _external=True)
+
+#         return jsonify({
+#             "redirect_url": url_for('crop_result', crop=recommended_crop, image_url=image_url, N=N, P=P, K=K)
+#         })
+
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 400
+
+# @app.route('/crop_result')
+# def crop_result():
+#     crop = request.args.get('crop', 'Unknown Crop')
+#     image_url = request.args.get('image_url', '')
+#     N = request.args.get('N')
+#     P = request.args.get('P')
+#     K = request.args.get('K')
+#     return render_template('crop_result.html', crop=crop, image_url=image_url, N=N, P=P, K=K)
+
+# @app.route('/predict_fertility')
+# def predict_fertility():
+#     return render_template('soil_fertility.html')
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
