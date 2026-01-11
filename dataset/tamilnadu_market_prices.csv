@@ -1,0 +1,77 @@
+date,crop,market,district,price
+2026-01-10,Paddy,Thanjavur Market,Thanjavur,2450
+2026-01-10,Paddy,Trichy Market,Trichy,2500
+2026-01-10,Paddy,Nagapattinam Market,Nagapattinam,2400
+2026-01-10,Paddy,Tiruvarur Market,Tiruvarur,2380
+2026-01-10,Paddy,Kancheepuram Market,Kancheepuram,2550
+2026-01-10,Paddy,Villupuram Market,Villupuram,2480
+2026-01-10,Paddy,Cuddalore Market,Cuddalore,2420
+2026-01-10,Paddy,Tirunelveli Market,Tirunelveli,2500
+2026-01-10,Paddy,Erode Market,Erode,2600
+2026-01-10,Paddy,Karur Market,Karur,2580
+
+2026-01-10,Maize,Salem Market,Salem,2100
+2026-01-10,Maize,Erode Market,Erode,2150
+2026-01-10,Maize,Namakkal Market,Namakkal,2200
+2026-01-10,Maize,Dharmapuri Market,Dharmapuri,2050
+2026-01-10,Maize,Krishnagiri Market,Krishnagiri,2120
+2026-01-10,Maize,Coimbatore Market,Coimbatore,2180
+2026-01-10,Maize,Tiruppur Market,Tiruppur,2170
+2026-01-10,Maize,Ariyalur Market,Ariyalur,2080
+2026-01-10,Maize,Perambalur Market,Perambalur,2060
+2026-01-10,Maize,Dindigul Market,Dindigul,2140
+
+2026-01-10,Groundnut,Madurai Market,Madurai,6200
+2026-01-10,Groundnut,Virudhunagar Market,Virudhunagar,6300
+2026-01-10,Groundnut,Sivagangai Market,Sivagangai,6150
+2026-01-10,Groundnut,Ramanathapuram Market,Ramanathapuram,6100
+2026-01-10,Groundnut,Tuticorin Market,Thoothukudi,6250
+2026-01-10,Groundnut,Theni Market,Theni,6350
+2026-01-10,Groundnut,Pudukkottai Market,Pudukkottai,6180
+2026-01-10,Groundnut,Tirupattur Market,Tirupattur,6220
+2026-01-10,Groundnut,Vellore Market,Vellore,6280
+2026-01-10,Groundnut,Salem Market,Salem,6190
+
+2026-01-10,Chilli,Ramnad Market,Ramanathapuram,8800
+2026-01-10,Chilli,Guntur Style Market,Salem,8900
+2026-01-10,Chilli,Erode Market,Erode,9050
+2026-01-10,Chilli,Dindigul Market,Dindigul,8700
+2026-01-10,Chilli,Virudhunagar Market,Virudhunagar,8950
+2026-01-10,Chilli,Theni Market,Theni,9100
+2026-01-10,Chilli,Krishnagiri Market,Krishnagiri,8850
+2026-01-10,Chilli,Dharmapuri Market,Dharmapuri,8750
+2026-01-10,Chilli,Tiruppur Market,Tiruppur,9000
+2026-01-10,Chilli,Coimbatore Market,Coimbatore,9200
+
+2026-01-10,Tomato,Koyambedu Market,Chennai,1800
+2026-01-10,Tomato,Salem Market,Salem,1750
+2026-01-10,Tomato,Dindigul Market,Dindigul,1700
+2026-01-10,Tomato,Krishnagiri Market,Krishnagiri,1650
+2026-01-10,Tomato,Dharmapuri Market,Dharmapuri,1600
+2026-01-10,Tomato,Theni Market,Theni,1720
+2026-01-10,Tomato,Coimbatore Market,Coimbatore,1780
+2026-01-10,Tomato,Erode Market,Erode,1760
+2026-01-10,Tomato,Tiruppur Market,Tiruppur,1740
+2026-01-10,Tomato,Namakkal Market,Namakkal,1690
+
+2026-01-10,Onion,Perambalur Market,Perambalur,3200
+2026-01-10,Onion,Ariyalur Market,Ariyalur,3300
+2026-01-10,Onion,Dindigul Market,Dindigul,3400
+2026-01-10,Onion,Salem Market,Salem,3250
+2026-01-10,Onion,Erode Market,Erode,3350
+2026-01-10,Onion,Theni Market,Theni,3450
+2026-01-10,Onion,Karur Market,Karur,3280
+2026-01-10,Onion,Namakkal Market,Namakkal,3320
+2026-01-10,Onion,Trichy Market,Trichy,3380
+2026-01-10,Onion,Madurai Market,Madurai,3420
+
+2026-01-10,Cotton,Salem Market,Salem,7200
+2026-01-10,Cotton,Coimbatore Market,Coimbatore,7350
+2026-01-10,Cotton,Erode Market,Erode,7400
+2026-01-10,Cotton,Tiruppur Market,Tiruppur,7500
+2026-01-10,Cotton,Karur Market,Karur,7250
+2026-01-10,Cotton,Dindigul Market,Dindigul,7100
+2026-01-10,Cotton,Virudhunagar Market,Virudhunagar,7300
+2026-01-10,Cotton,Theni Market,Theni,7450
+2026-01-10,Cotton,Krishnagiri Market,Krishnagiri,7350
+2026-01-10,Cotton,Dharmapuri Market,Dharmapuri,7200

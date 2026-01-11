@@ -2,9 +2,21 @@ from flask import Flask, render_template, request, jsonify, url_for, redirect, s
 import numpy as np
 import joblib
 import os
+import pandas as pd
+from services.price_prediction import predict_price
+from apscheduler.schedulers.background import BackgroundScheduler
+from services.fetch_market_data import fetch_and_update_csv
+
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+    fetch_and_update_csv()
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(fetch_and_update_csv, "interval", hours=24)
+    scheduler.start()
+
 app.secret_key = "final_year_secret_key"
 
 # -------------------------
@@ -13,6 +25,66 @@ app.secret_key = "final_year_secret_key"
 crop_model = joblib.load("models/crop_model.pkl")
 crop_label_encoder = joblib.load("models/crop_label_encoder.pkl")
 crop_scaler = joblib.load("models/crop_scaler.pkl")
+CSV_PATH = "dataset/tamilnadu_market_prices.csv"
+
+def load_market_data():
+    df = pd.read_csv(CSV_PATH)
+    df["price"] = df["price"].astype(int)
+    return df
+def add_price_trend(df):
+    df = df.sort_values(["crop", "market", "date"])
+
+    df["trend"] = "same"
+    df["prev_price"] = df.groupby(
+        ["crop", "market"]
+    )["price"].shift(1)
+
+    df.loc[df["price"] > df["prev_price"], "trend"] = "up"
+    df.loc[df["price"] < df["prev_price"], "trend"] = "down"
+
+    return df
+@app.route("/api/market-prices")
+def market_prices_api():
+    df = load_market_data()
+    df = add_price_trend(df)
+
+    df["date"] = df["date"].astype(str).str.strip()
+    latest_date = df["date"].max()
+    df = df[df["date"] == latest_date]
+
+    # 🔥 CRITICAL FIX: remove NaN-causing column
+    df = df.drop(columns=["prev_price"], errors="ignore")
+
+    return jsonify({
+        "last_updated": latest_date,
+        "data": df.to_dict(orient="records")
+    })
+@app.route("/api/predict-price")
+def predict_price():
+    # load trained model
+    # predict next price
+    pass
+@app.route("/api/predict-price")
+def predict_price_api():
+    crop = request.args.get("crop")
+    district = request.args.get("district")
+
+    if not crop or not district:
+        return jsonify({"error": "crop and district required"}), 400
+
+    predicted = predict_price(crop, district)
+
+    if predicted is None:
+        return jsonify({"error": "Not enough data"}), 404
+
+    return jsonify({
+        "crop": crop,
+        "district": district,
+        "predicted_price": predicted
+    })
+@app.route("/visitor/market-price")
+def visitor_market_price():
+    return render_template("visitor/market_price.html")
 
 # -------------------------
 # SIMPLE USER STORAGE (FOR PROJECT)
