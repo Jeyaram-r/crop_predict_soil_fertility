@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, url_for, redirect, s
 import numpy as np
 import joblib
 import os
+import json
 import pandas as pd
 from services.price_prediction import predict_price
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -26,6 +27,20 @@ crop_model = joblib.load("models/crop_model.pkl")
 crop_label_encoder = joblib.load("models/crop_label_encoder.pkl")
 crop_scaler = joblib.load("models/crop_scaler.pkl")
 CSV_PATH = "dataset/tamilnadu_market_prices.csv"
+ROADMAP_PATH = os.path.join("dataset", "crop_roadmaps.json")
+
+with open(ROADMAP_PATH, "r") as f:
+    CROP_ROADMAPS = json.load(f)
+@app.route("/get_crop_roadmap/<crop_name>")
+def get_crop_roadmap(crop_name):
+    crop_name = crop_name.lower()
+
+    for crop in CROP_ROADMAPS:
+        if crop["crop"].lower() == crop_name:
+            return crop  # Flask auto-converts dict → JSON
+
+    return {"error": "Crop roadmap not found"}, 404
+
 
 def load_market_data():
     df = pd.read_csv(CSV_PATH)

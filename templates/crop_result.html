@@ -113,8 +113,60 @@
         <a href="/predict_fertility?N={{ N }}&P={{ P }}&K={{ K }}" class="btn-custom btn-fertility">
             <i class="fa-solid fa-leaf"></i> Predict Soil Fertility
         </a>
+        <button onclick="loadRoadmap('{{ crop }}')" class="btn btn-success">
+  View Crop Roadmap
+</button>
+<div id="roadmapContainer" style="margin-top:20px;"></div>
 
     </div>
+    <script>
+function loadRoadmap(cropName) {
+    fetch(`/get_crop_roadmap/${cropName}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("roadmapContainer").innerHTML = data.error;
+                return;
+            }
+
+            let html = `
+              <h3>${data.crop.toUpperCase()} Roadmap</h3>
+              <p><b>Season:</b> ${data.season}</p>
+              <p><b>Duration:</b> ${data.duration_days} days</p>
+              <p><b>NPK (kg/ha):</b> N-${data.npk_kg_per_ha.N},
+                 P-${data.npk_kg_per_ha.P},
+                 K-${data.npk_kg_per_ha.K}</p>
+
+              <table border="1" width="100%" cellpadding="6">
+                <tr>
+                  <th>Stage</th>
+                  <th>Growth Status</th>
+                  <th>Days</th>
+                  <th>Activity</th>
+                  <th>Fertilizer</th>
+                  <th>Irrigation</th>
+                </tr>
+            `;
+
+            data.roadmap.forEach(stage => {
+                html += `
+                  <tr>
+                    <td>${stage.stage}</td>
+                    <td>${stage.growth_status}</td>
+                    <td>${stage.day_range}</td>
+                    <td>${stage.activity}</td>
+                    <td>${stage.fertilizer}</td>
+                    <td>${stage.irrigation}</td>
+                  </tr>
+                `;
+            });
+
+            html += "</table>";
+            document.getElementById("roadmapContainer").innerHTML = html;
+        });
+}
+</script>
+
 
 </body>
 </html>
