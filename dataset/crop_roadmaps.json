@@ -1,0 +1,279 @@
+[
+  {
+    "crop": "rice",
+    "season": "Kharif",
+    "duration_days": 120,
+    "npk_kg_per_ha": { "N": 120, "P": 40, "K": 40 },
+    "roadmap": [
+      { "stage": "Land Preparation", "growth_status": "pre-sowing", "day_range": "1-7", "activity": "Field preparation and puddling", "fertilizer": "Organic manure", "irrigation": "Wet soil" },
+      { "stage": "Seedling", "growth_status": "seedling", "day_range": "8-25", "activity": "Nursery seedling growth", "fertilizer": "None", "irrigation": "Light" },
+      { "stage": "Transplanting", "growth_status": "vegetative", "day_range": "26", "activity": "Transplant seedlings", "fertilizer": "N40 P40 K40", "irrigation": "Standing water" },
+      { "stage": "Tillering", "growth_status": "vegetative", "day_range": "35-45", "activity": "Tillering stage", "fertilizer": "N40", "irrigation": "Regular flooding" },
+      { "stage": "Flowering", "growth_status": "flowering", "day_range": "55-65", "activity": "Panicle initiation", "fertilizer": "N40", "irrigation": "Adequate" },
+      { "stage": "Harvest", "growth_status": "harvest", "day_range": "110-120", "activity": "Harvest mature crop", "fertilizer": "None", "irrigation": "Stop" }
+    ]
+  },
+  {
+    "crop": "maize",
+    "season": "Kharif/Rabi",
+    "duration_days": 100,
+    "npk_kg_per_ha": { "N": 150, "P": 60, "K": 40 },
+    "roadmap": [
+      { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Direct seeding", "fertilizer": "N50 P60 K40", "irrigation": "Light" },
+      { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "20-40", "activity": "Leaf development", "fertilizer": "N50", "irrigation": "Moderate" },
+      { "stage": "Flowering", "growth_status": "flowering", "day_range": "50-65", "activity": "Tasseling & silking", "fertilizer": "N50", "irrigation": "Critical" },
+      { "stage": "Harvest", "growth_status": "harvest", "day_range": "90-100", "activity": "Cob harvesting", "fertilizer": "None", "irrigation": "Stop" }
+    ]
+  },
+  {
+    "crop": "chickpea",
+    "season": "Rabi",
+    "duration_days": 110,
+    "npk_kg_per_ha": { "N": 25, "P": 50, "K": 20 },
+    "roadmap": [
+      { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Seed sowing", "fertilizer": "N25 P50 K20", "irrigation": "Minimal" },
+      { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "25-45", "activity": "Branching", "fertilizer": "None", "irrigation": "Low" },
+      { "stage": "Flowering", "growth_status": "flowering", "day_range": "50-70", "activity": "Flowering & pod set", "fertilizer": "None", "irrigation": "If dry" },
+      { "stage": "Harvest", "growth_status": "harvest", "day_range": "100-110", "activity": "Dry pod harvest", "fertilizer": "None", "irrigation": "Stop" }
+    ]
+  },
+  {
+    "crop": "banana",
+    "season": "Perennial",
+    "duration_days": 360,
+    "npk_kg_per_ha": { "N": 250, "P": 80, "K": 350 },
+    "roadmap": [
+      { "stage": "Planting", "growth_status": "seedling", "day_range": "1-30", "activity": "Sucker planting", "fertilizer": "N50 P80 K100", "irrigation": "Regular" },
+      { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "60-180", "activity": "Leaf & pseudostem growth", "fertilizer": "N100 K150", "irrigation": "High" },
+      { "stage": "Flowering", "growth_status": "flowering", "day_range": "210-260", "activity": "Inflorescence emergence", "fertilizer": "N100 K100", "irrigation": "Critical" },
+      { "stage": "Harvest", "growth_status": "harvest", "day_range": "300-360", "activity": "Bunch harvesting", "fertilizer": "None", "irrigation": "Reduce" }
+    ]
+  },
+   {
+    "crop": "cotton",
+    "season": "Kharif",
+    "duration_days": 180,
+    "npk_kg_per_ha": { "N": 120, "P": 50, "K": 50 },
+    "roadmap": [
+      { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-15", "activity": "Seed sowing", "fertilizer": "N40 P50 K50", "irrigation": "Light" },
+      { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "30-70", "activity": "Branch development", "fertilizer": "N40", "irrigation": "Moderate" },
+      { "stage": "Flowering", "growth_status": "flowering", "day_range": "80-120", "activity": "Flowering & boll formation", "fertilizer": "N40", "irrigation": "Critical" },
+      { "stage": "Harvest", "growth_status": "harvest", "day_range": "150-180", "activity": "Boll picking", "fertilizer": "None", "irrigation": "Stop" }
+    ]
+  },
+  {
+  "crop": "coconut",
+  "season": "Perennial",
+  "duration_days": 365,
+  "npk_kg_per_ha": { "N": 500, "P": 320, "K": 1200 },
+  "roadmap": [
+    { "stage": "Planting", "growth_status": "seedling", "day_range": "1-90", "activity": "Seedling establishment", "fertilizer": "Organic manure", "irrigation": "Regular" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "90-240", "activity": "Canopy growth", "fertilizer": "N250 P160 K600", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "240-300", "activity": "Spathe emergence", "fertilizer": "N250 P160 K600", "irrigation": "Regular" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "330-365", "activity": "Nut harvesting", "fertilizer": "None", "irrigation": "Normal" }
+  ]
+},
+{
+  "crop": "mango",
+  "season": "Perennial",
+  "duration_days": 365,
+  "npk_kg_per_ha": { "N": 120, "P": 50, "K": 100 },
+  "roadmap": [
+    { "stage": "Planting", "growth_status": "seedling", "day_range": "1-60", "activity": "Sapling establishment", "fertilizer": "Organic manure", "irrigation": "Light" },
+    { "stage": "Vegetative Growth", "growth_status": "vegetative", "day_range": "60-180", "activity": "Canopy development", "fertilizer": "N60 P25 K50", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "210-260", "activity": "Flowering & fruit set", "fertilizer": "N60 P25 K50", "irrigation": "Limited" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "300-365", "activity": "Fruit harvesting", "fertilizer": "None", "irrigation": "Reduce" }
+  ]
+},
+{
+  "crop": "grapes",
+  "season": "Rabi/Summer",
+  "duration_days": 150,
+  "npk_kg_per_ha": { "N": 150, "P": 60, "K": 200 },
+  "roadmap": [
+    { "stage": "Pruning & Bud Break", "growth_status": "seedling", "day_range": "1-20", "activity": "Pruning & shoot emergence", "fertilizer": "N50 P60 K80", "irrigation": "Light" },
+    { "stage": "Vegetative Growth", "growth_status": "vegetative", "day_range": "30-60", "activity": "Shoot & leaf growth", "fertilizer": "N50 K60", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "65-90", "activity": "Flowering & berry set", "fertilizer": "N50 K60", "irrigation": "Controlled" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "120-150", "activity": "Bunch harvesting", "fertilizer": "None", "irrigation": "Stop before harvest" }
+  ]
+},
+{
+  "crop": "watermelon",
+  "season": "Zaid",
+  "duration_days": 90,
+  "npk_kg_per_ha": { "N": 100, "P": 50, "K": 100 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Direct seeding", "fertilizer": "N50 P50 K50", "irrigation": "Light" },
+    { "stage": "Vine Growth", "growth_status": "vegetative", "day_range": "20-40", "activity": "Vine spreading", "fertilizer": "N30 K30", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "45-60", "activity": "Flowering & fruit set", "fertilizer": "N20 K20", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "80-90", "activity": "Fruit harvesting", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "muskmelon",
+  "season": "Zaid",
+  "duration_days": 85,
+  "npk_kg_per_ha": { "N": 80, "P": 50, "K": 100 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Seed sowing", "fertilizer": "N40 P50 K50", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "20-40", "activity": "Vine development", "fertilizer": "N20 K30", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "45-60", "activity": "Flower & fruit set", "fertilizer": "N20 K20", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "75-85", "activity": "Harvest ripe fruits", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "apple",
+  "season": "Temperate",
+  "duration_days": 365,
+  "npk_kg_per_ha": { "N": 100, "P": 50, "K": 100 },
+  "roadmap": [
+    { "stage": "Dormancy Break", "growth_status": "seedling", "day_range": "1-60", "activity": "Bud swelling", "fertilizer": "Organic manure", "irrigation": "Low" },
+    { "stage": "Vegetative Growth", "growth_status": "vegetative", "day_range": "60-150", "activity": "Leaf & shoot growth", "fertilizer": "N50 P25 K50", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "160-210", "activity": "Flowering & fruit set", "fertilizer": "N50 P25 K50", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "300-365", "activity": "Apple harvesting", "fertilizer": "None", "irrigation": "Reduce" }
+  ]
+},
+{
+  "crop": "orange",
+  "season": "Perennial",
+  "duration_days": 300,
+  "npk_kg_per_ha": { "N": 120, "P": 60, "K": 120 },
+  "roadmap": [
+    { "stage": "Plant Establishment", "growth_status": "seedling", "day_range": "1-60", "activity": "Sapling growth", "fertilizer": "Organic manure", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "60-150", "activity": "Canopy growth", "fertilizer": "N60 P30 K60", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "160-210", "activity": "Flowering & fruit set", "fertilizer": "N60 P30 K60", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "260-300", "activity": "Fruit harvesting", "fertilizer": "None", "irrigation": "Reduce" }
+  ]
+},
+{
+  "crop": "papaya",
+  "season": "Perennial",
+  "duration_days": 270,
+  "npk_kg_per_ha": { "N": 200, "P": 200, "K": 250 },
+  "roadmap": [
+    { "stage": "Planting", "growth_status": "seedling", "day_range": "1-30", "activity": "Seedling establishment", "fertilizer": "N50 P50 K60", "irrigation": "Regular" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "40-120", "activity": "Stem & leaf growth", "fertilizer": "N100 P100 K120", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "130-180", "activity": "Flowering & fruit set", "fertilizer": "N50 P50 K70", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "200-270", "activity": "Fruit harvesting", "fertilizer": "None", "irrigation": "Reduce" }
+  ]
+},
+{
+  "crop": "jute",
+  "season": "Kharif",
+  "duration_days": 120,
+  "npk_kg_per_ha": { "N": 80, "P": 30, "K": 30 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Broadcast seeding", "fertilizer": "N40 P30 K30", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "20-60", "activity": "Stem elongation", "fertilizer": "N40", "irrigation": "Moderate" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "100-120", "activity": "Harvest & retting", "fertilizer": "None", "irrigation": "Water retting" }
+  ]
+},
+{
+  "crop": "coffee",
+  "season": "Perennial",
+  "duration_days": 365,
+  "npk_kg_per_ha": { "N": 120, "P": 90, "K": 120 },
+  "roadmap": [
+    { "stage": "Plant Establishment", "growth_status": "seedling", "day_range": "1-90", "activity": "Seedling establishment under shade", "fertilizer": "Organic manure", "irrigation": "Regular" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "90-210", "activity": "Bush growth & pruning", "fertilizer": "N60 P45 K60", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "220-260", "activity": "Blossom & berry set", "fertilizer": "N60 P45 K60", "irrigation": "Blossom showers" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "300-365", "activity": "Cherry picking", "fertilizer": "None", "irrigation": "Reduce" }
+  ]
+},
+
+{
+  "crop": "kidneybeans",
+  "season": "Kharif",
+  "duration_days": 95,
+  "npk_kg_per_ha": { "N": 30, "P": 60, "K": 40 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Seed sowing", "fertilizer": "N30 P60 K40", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "20-45", "activity": "Leaf & branch growth", "fertilizer": "None", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "50-65", "activity": "Flowering & pod formation", "fertilizer": "None", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "85-95", "activity": "Pod harvesting", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "pigeonpeas",
+  "season": "Kharif",
+  "duration_days": 180,
+  "npk_kg_per_ha": { "N": 20, "P": 50, "K": 20 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-15", "activity": "Seed sowing", "fertilizer": "N20 P50 K20", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "30-90", "activity": "Bush growth", "fertilizer": "None", "irrigation": "Low" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "100-140", "activity": "Flowering & pod set", "fertilizer": "None", "irrigation": "If dry" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "160-180", "activity": "Dry pod harvest", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "mothbeans",
+  "season": "Kharif",
+  "duration_days": 75,
+  "npk_kg_per_ha": { "N": 20, "P": 40, "K": 20 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-7", "activity": "Broadcast seeding", "fertilizer": "N20 P40 K20", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "15-35", "activity": "Spreading growth", "fertilizer": "None", "irrigation": "Low" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "40-55", "activity": "Flowering & pod set", "fertilizer": "None", "irrigation": "Minimal" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "65-75", "activity": "Dry pod harvest", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "mungbean",
+  "season": "Zaid/Kharif",
+  "duration_days": 70,
+  "npk_kg_per_ha": { "N": 20, "P": 40, "K": 20 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-7", "activity": "Seed sowing", "fertilizer": "N20 P40 K20", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "15-30", "activity": "Leaf development", "fertilizer": "None", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "35-50", "activity": "Flowering & pod formation", "fertilizer": "None", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "60-70", "activity": "Pod harvesting", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "blackgram",
+  "season": "Kharif/Rabi",
+  "duration_days": 80,
+  "npk_kg_per_ha": { "N": 20, "P": 40, "K": 20 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Seed sowing", "fertilizer": "N20 P40 K20", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "20-40", "activity": "Plant growth", "fertilizer": "None", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "45-60", "activity": "Flowering & pod set", "fertilizer": "None", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "70-80", "activity": "Harvest pods", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "lentil",
+  "season": "Rabi",
+  "duration_days": 110,
+  "npk_kg_per_ha": { "N": 20, "P": 50, "K": 20 },
+  "roadmap": [
+    { "stage": "Sowing", "growth_status": "seedling", "day_range": "1-10", "activity": "Seed sowing", "fertilizer": "N20 P50 K20", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "25-50", "activity": "Branching", "fertilizer": "None", "irrigation": "Low" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "60-80", "activity": "Flowering & pod set", "fertilizer": "None", "irrigation": "If dry" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "100-110", "activity": "Dry pod harvest", "fertilizer": "None", "irrigation": "Stop" }
+  ]
+},
+{
+  "crop": "pomegranate",
+  "season": "Perennial",
+  "duration_days": 300,
+  "npk_kg_per_ha": { "N": 200, "P": 100, "K": 200 },
+  "roadmap": [
+    { "stage": "Plant Establishment", "growth_status": "seedling", "day_range": "1-60", "activity": "Sapling establishment", "fertilizer": "Organic manure", "irrigation": "Light" },
+    { "stage": "Vegetative", "growth_status": "vegetative", "day_range": "60-150", "activity": "Canopy development", "fertilizer": "N100 P50 K100", "irrigation": "Moderate" },
+    { "stage": "Flowering", "growth_status": "flowering", "day_range": "160-210", "activity": "Flowering & fruit set", "fertilizer": "N100 P50 K100", "irrigation": "Critical" },
+    { "stage": "Harvest", "growth_status": "harvest", "day_range": "260-300", "activity": "Fruit harvesting", "fertilizer": "None", "irrigation": "Reduce" }
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+]
