@@ -1,0 +1,25 @@
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    min-height: 100vh;
+}
+
+.glass-card, .glass-box {
+    background: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.btn-custom{
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+
+}
+.btn-custom:hover {
+    background-color: #45a049;
+    color: white;
+}
+
