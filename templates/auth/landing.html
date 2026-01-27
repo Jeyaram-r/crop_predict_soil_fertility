@@ -19,6 +19,53 @@
             --card-bg: rgba(255,255,255,0.9);
             --text-main: #ffffff;
         }
+        .team-glass {
+    width: 340px;
+    height: 230px;              /* increased height */
+    margin: auto;
+    padding: 20px;
+    border-radius: 22px;
+    backdrop-filter: blur(14px);
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+.team-img {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+}
+
+.team-glass h6 {
+    margin: 6px 0 2px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.team-glass p {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin: 0;
+    color: #eaeaea;
+}
+
+.team-glass .role {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+
 
         body.light {
             --bg-overlay: rgba(255,255,255,0.65);
@@ -108,18 +155,20 @@
 </nav>
 
 <!-- HERO -->
-<div class="container vh-100 d-flex align-items-center justify-content-center">
-    <div class="row w-100 justify-content-center text-center">
+<div class="container vh-100 d-flex flex-column justify-content-center">
 
-        <div class="col-12 mb-5">
-            <h1 class="fw-bold">Smart Agriculture Recommendation System</h1>
-            <p class="hero-subtitle">
-                AI-driven crop guidance & real-time market insights
-            </p>
-        </div>
+    <!-- HERO -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">Smart Agriculture Recommendation System</h1>
+        <p class="hero-subtitle">
+            AI-driven crop guidance & real-time market insights
+        </p>
+    </div>
 
-        <div class="col-md-5 mb-4">
-            <div class="card p-4">
+    <!-- LOGIN CARDS -->
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-5 mb-3">
+            <div class="card p-4 text-center">
                 <h4>👨‍🌾 Farmer</h4>
                 <p>Crop recommendation & soil analysis</p>
                 <a href="{{ url_for('signup', role='farmer') }}" class="btn btn-success">
@@ -128,8 +177,8 @@
             </div>
         </div>
 
-        <div class="col-md-5 mb-4">
-            <div class="card p-4">
+        <div class="col-md-5 mb-3">
+            <div class="card p-4 text-center">
                 <h4>👀 Visitor</h4>
                 <p>View current crop market prices</p>
                 <a href="{{ url_for('signup', role='visitor') }}" class="btn btn-primary">
@@ -137,9 +186,78 @@
                 </a>
             </div>
         </div>
+    </div>
+
+    <!-- TEAM SLIDER -->
+    <!-- PROJECT TEAM SLIDER -->
+<div class="text-center mt-4">
+
+    <h5 class="fw-semibold mb-3 text-white">Project Team</h5>
+
+    <div id="teamSlider"
+         class="carousel slide carousel-fade"
+         data-bs-ride="carousel"
+         data-bs-interval="2000">
+
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#teamSlider" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#teamSlider" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#teamSlider" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#teamSlider" data-bs-slide-to="3"></button>
+        </div>
+
+        <div class="carousel-inner">
+
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+        <div class="team-glass">
+            <span class="role">🎓 Guide</span>
+            <img src="{{ url_for('static', filename='team/guide.jpg') }}" class="team-img">
+            
+            <h6>Dr. V. Rajesh Kannan</h6>
+            <p>Assistant Professor</p>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+        <div class="team-glass">
+            <span class="role">🎓 Students</span>
+            <img src="{{ url_for('static', filename='team/jeyaram.jpg') }}" class="team-img">
+            <span class="role">💻 Full Stack Developer</span>
+            <h6>Jeyaram R</h6>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+        <div class="team-glass">
+            <span class="role">🎓 Students</span>
+            <img src="{{ url_for('static', filename='team/vasanth.jpg') }}" class="team-img">
+            <span class="role">🎨 Front End Developer</span>
+            <h6>Vasanth M</h6>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="carousel-item">
+        <div class="team-glass">
+            <span class="role">🎓 Students</span>
+            <img src="{{ url_for('static', filename='team/mani.jpg') }}" class="team-img">
+            <span class="role">🧠 UI / UX Developer</span>
+            <h6>S. Mani Kanda Prabhu</h6>
+        </div>
+    </div>
+
+</div>
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
 <!-- SCRIPT -->
 <script>
