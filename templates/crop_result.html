@@ -117,9 +117,31 @@
   View Crop Roadmap
 </button>
 <div id="roadmapContainer" style="margin-top:20px;"></div>
+<button onclick="getFertilizer()">View Fertilizer Plan</button>
+<div id="fertilizerResult"></div>
 
     </div>
     <script>
+        function getFertilizer() {
+  fetch("/api/recommend-fertilizer", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      crop: "{{ crop }}",
+      N: "{{ N }}",
+      P: "{{ P }}",
+      K: "{{ K }}"
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    let html = "<h4>Recommended Fertilizers</h4>";
+    for (let f in data.fertilizers) {
+      html += `<p>${f}: ${data.fertilizers[f]}</p>`;
+    }
+    document.getElementById("fertilizerResult").innerHTML = html;
+  });
+}
 function loadRoadmap(cropName) {
     fetch(`/get_crop_roadmap/${cropName}`)
         .then(res => res.json())

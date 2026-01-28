@@ -74,6 +74,41 @@ def market_prices_api():
         "last_updated": latest_date,
         "data": df.to_dict(orient="records")
     })
+@app.route("/api/recommend-fertilizer", methods=["POST"])
+def recommend_fertilizer():
+    data = request.json
+
+    crop = data["crop"]
+    N = float(data["N"])
+    P = float(data["P"])
+    K = float(data["K"])
+
+    crop_req = {
+        "rice": {"N": 120, "P": 60, "K": 40},
+        "wheat": {"N": 100, "P": 50, "K": 40},
+        "maize": {"N": 150, "P": 75, "K": 50},
+        "apple": {"N": 70, "P": 35, "K": 70}
+    }
+
+    req = crop_req[crop.lower()]
+
+    N_def = max(req["N"] - N, 0)
+    P_def = max(req["P"] - P, 0)
+    K_def = max(req["K"] - K, 0)
+
+    urea = round((N_def / 0.46) / 2.47, 2)
+    dap  = round((P_def / 0.46) / 2.47, 2)
+    mop  = round((K_def / 0.60) / 2.47, 2)
+
+    return jsonify({
+        "fertilizers": {
+            "Urea (kg/acre)": urea,
+            "DAP (kg/acre)": dap,
+            "MOP (kg/acre)": mop
+        },
+        "application_stage": "Basal + Top Dressing"
+    })
+
 @app.route("/api/predict-price")
 def predict_price():
     # load trained model
