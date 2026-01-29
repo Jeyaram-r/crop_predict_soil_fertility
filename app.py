@@ -12,11 +12,11 @@ from services.fetch_market_data import fetch_and_update_csv
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
-    fetch_and_update_csv()
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(fetch_and_update_csv, "interval", hours=24)
-    scheduler.start()
+# if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+#     fetch_and_update_csv()
+#     scheduler = BackgroundScheduler()
+#     scheduler.add_job(fetch_and_update_csv, "interval", hours=24)
+#     scheduler.start()
 
 app.secret_key = "final_year_secret_key"
 
@@ -74,11 +74,110 @@ def market_prices_api():
         "last_updated": latest_date,
         "data": df.to_dict(orient="records")
     })
-@app.route("/api/predict-price")
-def predict_price():
-    # load trained model
-    # predict next price
-    pass
+@app.route("/api/recommend-fertilizer", methods=["POST"])
+def recommend_fertilizer():
+    data = request.json
+
+    crop = data["crop"]
+    N = float(data["N"])
+    P = float(data["P"])
+    K = float(data["K"])
+    # if crop not in crop_req:
+    #     return jsonify({
+    #         "error": f"Fertilizer data not available for {crop}"
+    #     })
+
+    crop_req = {
+    "apple": {"N": 70, "P": 35, "K": 70},
+    "banana": {"N": 200, "P": 60, "K": 200},
+    "blackgram": {"N": 20, "P": 40, "K": 20},
+    "chickpea": {"N": 20, "P": 40, "K": 20},
+    "coconut": {"N": 50, "P": 25, "K": 75},
+    "coffee": {"N": 120, "P": 60, "K": 120},
+    "cotton": {"N": 80, "P": 40, "K": 40},
+    "grapes": {"N": 90, "P": 60, "K": 120},
+    "jute": {"N": 60, "P": 30, "K": 30},
+    "kidneybeans": {"N": 25, "P": 50, "K": 25},
+    "lentil": {"N": 20, "P": 40, "K": 20},
+    "maize": {"N": 150, "P": 75, "K": 50},
+    "mango": {"N": 100, "P": 50, "K": 100},
+    "mothbeans": {"N": 20, "P": 40, "K": 20},
+    "mungbean": {"N": 20, "P": 40, "K": 20},
+    "muskmelon": {"N": 80, "P": 50, "K": 50},
+    "orange": {"N": 100, "P": 50, "K": 100},
+    "papaya": {"N": 150, "P": 60, "K": 150},
+    "pigeonpeas": {"N": 25, "P": 50, "K": 25},
+    "pomegranate": {"N": 80, "P": 40, "K": 80},
+    "rice": {"N": 120, "P": 60, "K": 40},
+    "watermelon": {"N": 80, "P": 50, "K": 50}
+}
+
+
+    req = crop_req[crop.lower()]
+
+    N_def = max(req["N"] - N, 0)
+    P_def = max(req["P"] - P, 0)
+    K_def = max(req["K"] - K, 0)
+
+    urea = round((N_def / 0.46) / 2.47, 2)
+    dap  = round((P_def / 0.46) / 2.47, 2)
+    mop  = round((K_def / 0.60) / 2.47, 2)
+
+    note = "Soil nutrients are sufficient. No additional fertilizer required."
+    if urea > 0 or dap > 0 or mop > 0:
+        note = "Fertilizer recommended based on nutrient deficiency."
+
+    return jsonify({
+        "crop": crop,
+        "fertilizers": {
+            "Urea (kg/acre)": urea,
+            "DAP (kg/acre)": dap,
+            "MOP (kg/acre)": mop
+        },
+        "note": note
+})
+
+
+
+@app.route("/api/explain-crop", methods=["POST"])
+def explain_crop():
+    data = request.json
+
+    features = [
+        float(data["N"]),
+        float(data["P"]),
+        float(data["K"]),
+        float(data["temperature"]),
+        float(data["humidity"]),
+        float(data["pH"]),
+        float(data["rainfall"])
+    ]
+
+    feature_names = [
+        "Nitrogen",
+        "Phosphorus",
+        "Potassium",
+        "Temperature",
+        "Humidity",
+        "pH",
+        "Rainfall"
+    ]
+
+    importances = crop_model.feature_importances_
+
+    explanation = sorted(
+        zip(feature_names, importances),
+        key=lambda x: x[1],
+        reverse=True
+    )
+
+    return jsonify({
+        "explanation": [
+            {"feature": f, "importance": round(i * 100, 2)}
+            for f, i in explanation
+        ]
+    })
+
 @app.route("/api/predict-price")
 def predict_price_api():
     crop = request.args.get("crop")
@@ -244,13 +343,20 @@ def recommend_crop():
         image_url = url_for('serve_static', filename=f'crop_images/{image_filename}', _external=True)
 
         return jsonify({
-            "redirect_url": url_for(
-                'crop_result',
-                crop=recommended_crop,
-                image_url=image_url,
-                N=N, P=P, K=K
-            )
-        })
+        "redirect_url": url_for(
+        'crop_result',
+        crop=recommended_crop,
+        image_url=image_url,
+        N=N,
+        P=P,
+        K=K,
+        temperature=temperature,
+        humidity=humidity,
+        pH=pH,
+        rainfall=rainfall
+    )
+})
+
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -259,6 +365,11 @@ def recommend_crop():
 # RUN
 # -------------------------
 if __name__ == '__main__':
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        fetch_and_update_csv()
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(fetch_and_update_csv, "interval", hours=24)
+        scheduler.start()
     app.run(debug=True)
 
 # from flask import Flask, render_template, request, jsonify, url_for, redirect, send_from_directory

@@ -1,73 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Soil Fertility Prediction</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --bg-overlay: rgba(0,0,0,0.55);
+      --card-bg: rgba(255,255,255,0.18);
+      --text-main: #ffffff;
+    }
+
     body {
-      background: linear-gradient(to right, #e8f5e9, #a5d6a7);
-      text-align: center;
-      padding-top: 70px;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text-main);
+      background:
+        linear-gradient(var(--bg-overlay), var(--bg-overlay)),
+        url("/static/assets/landing.svg");
+      background-size: cover;
+      background-position: center;
+      padding-top: 80px;
     }
-    .container {
-      background: white;
+
+    /* Navbar */
+    .navbar {
+      backdrop-filter: blur(12px);
+      background: rgba(0,0,0,0.4);
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    /* Glass Card */
+    .glass-box {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
       padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-      display: inline-block;
+      width: 95%;
+      max-width: 520px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+      margin: auto;
+      animation: fadeIn 0.7s ease;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     h2 {
-      color: #2e7d32;
+      font-weight: 600;
+      margin-bottom: 20px;
     }
+
+    .npk-box {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .npk {
+      background: rgba(255,255,255,0.9);
+      color: #111;
+      border-radius: 14px;
+      padding: 12px 18px;
+      min-width: 90px;
+      font-weight: 500;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+
     #fertility-result {
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 1.3rem;
+      font-weight: 600;
       margin-top: 20px;
-      color: #33691e;
     }
-    a {
-      display: inline-block;
+
+    .badge {
+      font-size: 1rem;
+      padding: 10px 18px;
+      border-radius: 30px;
+    }
+
+    .btn-back {
       margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #2e7d32;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    a:hover {
-      background-color: #1b5e20;
+      border-radius: 30px;
+      padding: 10px 28px;
     }
   </style>
 </head>
+
 <body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
-    <h2>🌱 Soil Fertility Based on NPK</h2>
-    <p id="fertility-result">Checking fertility...</p>
-    <a href="/">⬅ Back to Home</a>
+    <a class="navbar-brand text-white" href="#">
+      🌱 SmartAgro
+    </a>
+    <marquee class="text-white" style="width: 80%;">
+      Empowering Farmers with AI-Driven Crop Recommendations & Real-Time Market Insights
+    </marquee>
+  </div>
+</nav>
+
+<!-- CARD -->
+<div class="glass-box">
+
+  <h2>
+    <i class="fa-solid fa-seedling"></i>
+    Soil Fertility Prediction
+  </h2>
+
+  <!-- NPK VALUES -->
+  <div class="npk-box">
+    <div class="npk">N: <span id="nVal">0</span></div>
+    <div class="npk">P: <span id="pVal">0</span></div>
+    <div class="npk">K: <span id="kVal">0</span></div>
   </div>
 
-  <script>
-    function classifyFertility(N, P, K) {
-      let n_level = N < 26 ? 0 : (N > 67 ? 2 : 1);
-      let p_level = P < 37 ? 0 : (P > 60 ? 2 : 1);
-      let k_level = K < 23 ? 0 : (K > 44 ? 2 : 1);
-      let avg = Math.round((n_level + p_level + k_level) / 3);
-      return ["Less Fertile", "Fertile", "Highly Fertile"][avg];
-    }
+  <!-- RESULT -->
+  <div id="fertility-result">
+    Checking fertility...
+  </div>
+ <a href="javascript:history.back()" class="btn btn-outline-light btn-back">
+  <i class="fa-solid fa-arrow-left"></i> Go Back
+</a>
 
-    $(document).ready(function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const N = parseFloat(urlParams.get("N")) || 0;
-      const P = parseFloat(urlParams.get("P")) || 0;
-      const K = parseFloat(urlParams.get("K")) || 0;
 
-      const fertility = classifyFertility(N, P, K);
-      $("#fertility-result").text("🌾 Soil Fertility: " + fertility);
-    });
-  </script>
+  <a href="/" class="btn btn-outline-light btn-back">
+    <i class="fa-solid fa-arrow-left"></i> Back to Home
+  </a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 🔴 ORIGINAL LOGIC — UNCHANGED -->
+<script>
+function classifyFertility(N, P, K) {
+  let n_level = N < 26 ? 0 : (N > 67 ? 2 : 1);
+  let p_level = P < 37 ? 0 : (P > 60 ? 2 : 1);
+  let k_level = K < 23 ? 0 : (K > 44 ? 2 : 1);
+  let avg = Math.round((n_level + p_level + k_level) / 3);
+  return ["Less Fertile", "Fertile", "Highly Fertile"][avg];
+}
+
+$(document).ready(function () {
+  const params = new URLSearchParams(window.location.search);
+  const N = parseFloat(params.get("N")) || 0;
+  const P = parseFloat(params.get("P")) || 0;
+  const K = parseFloat(params.get("K")) || 0;
+
+  $("#nVal").text(N);
+  $("#pVal").text(P);
+  $("#kVal").text(K);
+
+  const fertility = classifyFertility(N, P, K);
+
+  let badgeClass = "bg-success";
+  if (fertility === "Less Fertile") badgeClass = "bg-danger";
+  if (fertility === "Fertile") badgeClass = "bg-warning text-dark";
+
+  $("#fertility-result").html(
+    `<span class="badge ${badgeClass}">
+      🌾 ${fertility}
+    </span>`
+  );
+});
+</script>
+
 </body>
 </html>

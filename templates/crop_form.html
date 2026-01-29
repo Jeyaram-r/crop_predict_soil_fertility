@@ -78,19 +78,33 @@ $("#crop-form").on("submit", function(event) {
         rainfall: $("#rainfall").val()
     };
 
+    // ✅ SAVE TO sessionStorage
+    sessionStorage.setItem("cropFormData", JSON.stringify(formData));
+
     $.ajax({
         type: "POST",
         url: "/api/recommend_crop",
         contentType: "application/json",
         data: JSON.stringify(formData),
         success: function(response) {
-            if (response.redirect_url) {
-                window.location.href = response.redirect_url;
-            }
+            window.location.href = response.redirect_url;
         },
         error: function() {
             alert("Something went wrong. Please try again.");
         }
+    });
+});
+</script>
+<script>
+$(document).ready(function () {
+    const saved = sessionStorage.getItem("cropFormData");
+    if (!saved) return;
+
+    const data = JSON.parse(saved);
+
+    Object.keys(data).forEach(key => {
+        const input = document.getElementById(key);
+        if (input) input.value = data[key];
     });
 });
 </script>
