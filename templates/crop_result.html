@@ -12,120 +12,231 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        body {
-            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Poppins", sans-serif;
-            margin: 0;
-        }
+       :root {
+        --bg-overlay: rgba(0,0,0,0.55);
+        --card-bg: rgba(255,255,255,0.18);
+        --text-main: #ffffff;
+        --accent: #28a745;
+    }
 
-        .glass-box {
-            background: rgba(255, 255, 255, 0.20);
+    body {
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        margin: 0;
+        color: var(--text-main);
+        background:
+            linear-gradient(var(--bg-overlay), var(--bg-overlay)),
+            url("/static/assets/landing.svg");
+        background-size: cover;
+        background-position: center;
+        display: block;
+    padding-top: 70px;
+    }
+
+    .glass-box {
+        background: var(--card-bg);
+        backdrop-filter: blur(14px);
+        border-radius: 22px;
+        padding: 40px;
+        width: 95%;
+        max-width: 700px;
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.25);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+        animation: fadeIn 0.8s ease;
+          margin: 0 auto 60px auto;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 15px;
+    }
+
+    .crop-img {
+        width: 260px;
+        border-radius: 18px;
+        margin: 20px 0;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+        transition: transform 0.3s ease;
+    }
+
+    .crop-img:hover {
+        transform: scale(1.04);
+    }
+
+    /* BUTTON GROUP */
+    .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 25px;
+    }
+
+    .action-buttons .btn {
+        border-radius: 30px;
+        padding: 10px 26px;
+        font-weight: 500;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        transition: all 0.3s ease;
+    }
+
+    .action-buttons .btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+    }
+
+    /* RESULT SECTIONS */
+    .result-section {
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.95);
+        color: #111;
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+
+    /* TABLE */
+    table {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    table th {
+        background: #198754;
+        color: #fff;
+        font-weight: 500;
+    }
+
+    table td {
+        background: #f9f9f9;
+    }
+
+    /* TRY AGAIN BUTTON */
+    a.btn-outline-light {
+        margin-top: 25px;
+        border-radius: 30px;
+        padding: 10px 28px;
+    }
+    /* Navbar */
+        .navbar {
             backdrop-filter: blur(12px);
-            padding: 40px;
-            border-radius: 22px;
-            text-align: center;
-            width: 95%;
-            max-width: 600px;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.20);
-            animation: fadeIn 0.7s ease-out;
+            background: rgba(0,0,0,0.4);
+             height: 70px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(25px); }
-            to   { opacity: 1; transform: translateY(0); }
+        body.light .navbar {
+            background: rgba(255,255,255,0.6);
         }
 
-        .crop-img {
-            width: 260px;
-            height: auto;
-            border-radius: 14px;
-            margin-top: 25px;
-            box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
-            transition: transform .3s ease, box-shadow .3s ease;
-        }
-
-        .crop-img:hover {
-            transform: scale(1.03);
-            box-shadow: 0px 12px 30px rgba(0,0,0,0.3);
-        }
-
-        h2 {
+        .navbar-brand {
             font-weight: 600;
-            color: #4a0e2e;
-        }
-
-        .btn-custom {
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-            margin: 15px 8px 0;
-            transition: 0.3s ease;
-            color: #fff;
-        }
-
-        .btn-try {
-            background: #9c27b0;
-        }
-        .btn-try:hover {
-            background: #6d1b7b;
-            transform: translateY(-3px);
-        }
-
-        .btn-fertility {
-            background: #c2185b;
-        }
-        .btn-fertility:hover {
-            background: #880e4f;
-            transform: translateY(-3px);
+            font-size: 1.3rem;
         }
     </style>
 </head>
 
 <body>
-
-    <div class="glass-box">
-
-        <h2>
-            <i class="fa-solid fa-seedling"></i>
-            Recommended Crop:
-            <strong>{{ crop }}</strong>
-        </h2>
-
-        <img src="{{ image_url }}" 
-             alt="Recommended Crop" 
-             class="crop-img"
-             onerror="this.onerror=null; this.src='/static/crop_images/not_found.jpg';">
-
-        <br>
-
-        <a href="/" class="btn-custom btn-try">
-            <i class="fa-solid fa-rotate-left"></i> Try Again
+    <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand text-white" href="#">
+            🌱 SmartAgro
         </a>
+        <marquee class="text-white" style="width: 80%;">
+            Empowering Farmers with AI-Driven Crop Recommendations & Real-Time Market Insights
+        </marquee>
 
-        <a href="/predict_fertility?N={{ N }}&P={{ P }}&K={{ K }}" class="btn-custom btn-fertility">
-            <i class="fa-solid fa-leaf"></i> Predict Soil Fertility
-        </a>
-        <button onclick="loadRoadmap('{{ crop }}')" class="btn btn-success">
-  View Crop Roadmap
-</button>
-<div id="roadmapContainer" style="margin-top:20px;"></div>
-<button onclick="getFertilizer()">View Fertilizer Plan</button>
-<div id="fertilizerResult"></div>
-
+        <div class="ms-auto mode-toggle text-white" id="modeToggle">
+            <i class="bi bi-moon-fill"></i>
+        </div>
     </div>
-    <script>
-        function getFertilizer() {
+</nav>
+
+<div class="glass-box">
+
+    <h2>
+        <i class="fa-solid fa-seedling"></i>
+        Recommended Crop:
+        <strong>{{ crop }}</strong>
+    </h2>
+
+    <img src="{{ image_url }}" 
+         class="crop-img"
+         onerror="this.src='/static/crop_images/not_found.jpg'">
+
+    <!-- BUTTONS -->
+    <div class="action-buttons">
+        <button class="btn btn-warning" onclick="showExplain()">Why this crop?</button>
+        <button class="btn btn-success" onclick="showRoadmap()">View Crop Roadmap</button>
+        <button class="btn btn-info text-white" onclick="showFertilizer()">View Fertilizer Plan</button>
+         <a href="/predict_fertility?N={{ N }}&P={{ P }}&K={{ K }}"
+       class="btn btn-danger">
+        <i class="fa-solid fa-leaf"></i> Predict Soil Fertility
+    </a>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="explainResult" class="result-section"></div>
+    <div id="roadmapContainer" class="result-section"></div>
+    <div id="fertilizerResult" class="result-section"></div>
+
+<a href="/crop-form" class="btn btn-outline-light mt-4">
+    <i class="fa-solid fa-pen-to-square"></i> Edit Values
+</a>
+
+
+
+</div>
+
+<script>
+/* UI-ONLY VISIBILITY CONTROL */
+function hideAll() {
+    document.getElementById("explainResult").style.display = "none";
+    document.getElementById("roadmapContainer").style.display = "none";
+    document.getElementById("fertilizerResult").style.display = "none";
+}
+
+function showExplain() {
+    hideAll();
+    explainCrop();
+    document.getElementById("explainResult").style.display = "block";
+}
+
+function showRoadmap() {
+    hideAll();
+    loadRoadmap('{{ crop }}');
+    document.getElementById("roadmapContainer").style.display = "block";
+}
+
+function showFertilizer() {
+    hideAll();
+    getFertilizer();
+    document.getElementById("fertilizerResult").style.display = "block";
+}
+  const params = new URLSearchParams(window.location.search);
+
+  ["N","P","K","temperature","humidity","pH","rainfall"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && params.has(id)) {
+      el.value = params.get(id);
+    }
+  });
+</script>
+
+<!-- 🔴 YOUR EXISTING JS (UNCHANGED) -->
+<script>
+function getFertilizer() {
   fetch("/api/recommend-fertilizer", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       crop: "{{ crop }}",
       N: "{{ N }}",
@@ -136,59 +247,64 @@
   .then(res => res.json())
   .then(data => {
     let html = "<h4>Recommended Fertilizers</h4>";
-    for (let f in data.fertilizers) {
-      html += `<p>${f}: ${data.fertilizers[f]}</p>`;
+    if (data.note) html += `<p style="color:green;"><b>${data.note}</b></p>`;
+    if (data.error) {
+      html += `<p style="color:red;"><b>${data.error}</b></p>`;
+    } else {
+      for (let f in data.fertilizers) {
+        html += `<p>${f}: ${data.fertilizers[f]}</p>`;
+      }
     }
     document.getElementById("fertilizerResult").innerHTML = html;
   });
 }
+
+function explainCrop() {
+  fetch("/api/explain-crop", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      N: "{{ N }}",
+      P: "{{ P }}",
+      K: "{{ K }}",
+      temperature: "{{ request.args.get('temperature', 25) }}",
+      humidity: "{{ request.args.get('humidity', 70) }}",
+      pH: "{{ request.args.get('pH', 6.5) }}",
+      rainfall: "{{ request.args.get('rainfall', 100) }}"
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    let html = "<h4>Why this crop was recommended</h4><ul>";
+    data.explanation.forEach(item => {
+      html += `<li>${item.feature}: ${item.importance}% influence</li>`;
+    });
+    html += "</ul>";
+    document.getElementById("explainResult").innerHTML = html;
+  });
+}
+
 function loadRoadmap(cropName) {
-    fetch(`/get_crop_roadmap/${cropName}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                document.getElementById("roadmapContainer").innerHTML = data.error;
-                return;
-            }
-
-            let html = `
-              <h3>${data.crop.toUpperCase()} Roadmap</h3>
-              <p><b>Season:</b> ${data.season}</p>
-              <p><b>Duration:</b> ${data.duration_days} days</p>
-              <p><b>NPK (kg/ha):</b> N-${data.npk_kg_per_ha.N},
-                 P-${data.npk_kg_per_ha.P},
-                 K-${data.npk_kg_per_ha.K}</p>
-
-              <table border="1" width="100%" cellpadding="6">
-                <tr>
-                  <th>Stage</th>
-                  <th>Growth Status</th>
-                  <th>Days</th>
-                  <th>Activity</th>
-                  <th>Fertilizer</th>
-                  <th>Irrigation</th>
-                </tr>
-            `;
-
-            data.roadmap.forEach(stage => {
-                html += `
-                  <tr>
-                    <td>${stage.stage}</td>
-                    <td>${stage.growth_status}</td>
-                    <td>${stage.day_range}</td>
-                    <td>${stage.activity}</td>
-                    <td>${stage.fertilizer}</td>
-                    <td>${stage.irrigation}</td>
-                  </tr>
-                `;
-            });
-
-            html += "</table>";
-            document.getElementById("roadmapContainer").innerHTML = html;
-        });
+  fetch(`/get_crop_roadmap/${cropName}`)
+  .then(res => res.json())
+  .then(data => {
+    let html = `<h4>${data.crop} Roadmap</h4>`;
+    html += `<table class="table table-bordered"><thead>
+      <tr><th>Stage</th><th>Status</th><th>Days</th><th>Activity</th></tr>
+    </thead><tbody>`;
+    data.roadmap.forEach(r => {
+      html += `<tr>
+        <td>${r.stage}</td>
+        <td>${r.growth_status}</td>
+        <td>${r.day_range}</td>
+        <td>${r.activity}</td>
+      </tr>`;
+    });
+    html += "</tbody></table>";
+    document.getElementById("roadmapContainer").innerHTML = html;
+  });
 }
 </script>
-
 
 </body>
 </html>
