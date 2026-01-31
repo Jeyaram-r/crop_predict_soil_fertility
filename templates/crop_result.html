@@ -195,6 +195,13 @@
         <marquee class="text-white" style="width: 80%;">
             Empowering Farmers with AI-Driven Crop Recommendations & Real-Time Market Insights
         </marquee>
+        <div class="ms-auto">
+        {% if session.get('user') %}
+            <a href="/logout" class="btn btn-light btn-sm">Logout</a>
+        {% else %}
+            <a href="/" class="btn btn-light btn-sm">Home</a>
+        {% endif %}
+    </div>
 
         <div class="ms-auto mode-toggle text-white" id="modeToggle">
             <i class="bi bi-moon-fill"></i>
