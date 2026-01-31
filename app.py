@@ -26,6 +26,8 @@ app.secret_key = "final_year_secret_key"
 crop_model = joblib.load("models/crop_model.pkl")
 crop_label_encoder = joblib.load("models/crop_label_encoder.pkl")
 crop_scaler = joblib.load("models/crop_scaler.pkl")
+feature_importance = joblib.load("models/feature_importance.pkl")
+
 CSV_PATH = "dataset/tamilnadu_market_prices.csv"
 ROADMAP_PATH = os.path.join("dataset", "crop_roadmaps.json")
 
@@ -288,7 +290,23 @@ def crop_result():
     N = request.args.get('N')
     P = request.args.get('P')
     K = request.args.get('K')
-    return render_template('crop_result.html', crop=crop, image_url=image_url, N=N, P=P, K=K)
+
+    explanation = session.pop('explanation', [])
+    confidence = session.pop('confidence', None)
+    alternatives = session.pop('alternatives', [])
+
+    return render_template(
+        'crop_result.html',
+        crop=crop,
+        image_url=image_url,
+        N=N,
+        P=P,
+        K=K,
+        explanation=explanation,
+        confidence=confidence,
+        alternatives=alternatives
+    )
+
 
 @app.route('/predict_fertility')
 def predict_fertility():
@@ -331,16 +349,39 @@ def recommend_crop():
         input_features = np.array([[N, P, K, temperature, humidity, pH, rainfall]])
         input_features_scaled = crop_scaler.transform(input_features)
 
-        predicted_label = crop_model.predict(input_features_scaled)[0]
+        # Prediction
+        probs = crop_model.predict_proba(input_features_scaled)[0]
+        predicted_label = np.argmax(probs)
         recommended_crop = crop_label_encoder.inverse_transform([predicted_label])[0]
 
-        image_filename = f"{recommended_crop.lower()}.jpg"
-        image_path = os.path.join("static/crop_images", image_filename)
+        confidence = round(probs[predicted_label] * 100, 2)
 
-        if not os.path.exists(image_path):
+        # 🔍 Explainability
+        top_features = feature_importance.head(3).to_dict(orient="records")
+
+        # 🌾 Alternative crops (remaining probability)
+        classes = crop_label_encoder.inverse_transform(np.arange(len(probs)))
+
+        alternatives = [
+            {"crop": c, "confidence": round(p * 100, 2)}
+            for c, p in sorted(zip(classes, probs), key=lambda x: x[1], reverse=True)[1:4]
+        ]
+
+        # 🧠 STORE IN SESSION
+        session['explanation'] = top_features
+        session['confidence'] = confidence
+        session['alternatives'] = alternatives
+
+        # 🖼 Image
+        image_filename = f"{recommended_crop.lower()}.jpg"
+        if not os.path.exists(os.path.join("static/crop_images", image_filename)):
             image_filename = "not_found.jpg"
 
-        image_url = url_for('serve_static', filename=f'crop_images/{image_filename}', _external=True)
+        image_url = url_for(
+            'serve_static',
+            filename=f'crop_images/{image_filename}',
+            _external=True
+        )
 
         return jsonify({
         "redirect_url": url_for(
@@ -360,6 +401,7 @@ def recommend_crop():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
 
 # -------------------------
 # RUN
