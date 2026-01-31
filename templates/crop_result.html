@@ -18,6 +18,48 @@
         --text-main: #ffffff;
         --accent: #28a745;
     }
+    /* CONFIDENCE */
+.confidence-box {
+    margin: 18px 0;
+    text-align: left;
+}
+
+.progress {
+    height: 22px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* EXPLAINABILITY CARD */
+.explain-card {
+    background: rgba(255,255,255,0.95);
+    color: #111;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 25px;
+    text-align: left;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.explain-card h5 {
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.explain-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.explain-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 0.95rem;
+}
+
 
     body {
         font-family: 'Poppins', sans-serif;
@@ -153,6 +195,13 @@
         <marquee class="text-white" style="width: 80%;">
             Empowering Farmers with AI-Driven Crop Recommendations & Real-Time Market Insights
         </marquee>
+        <div class="ms-auto">
+        {% if session.get('user') %}
+            <a href="/logout" class="btn btn-light btn-sm">Logout</a>
+        {% else %}
+            <a href="/" class="btn btn-light btn-sm">Home</a>
+        {% endif %}
+    </div>
 
         <div class="ms-auto mode-toggle text-white" id="modeToggle">
             <i class="bi bi-moon-fill"></i>
@@ -167,10 +216,56 @@
         Recommended Crop:
         <strong>{{ crop }}</strong>
     </h2>
+     {% if confidence %}
+<div class="confidence-box">
+    <p class="mb-1"><b>Prediction Confidence</b></p>
+    <div class="progress">
+        <div class="progress-bar bg-success"
+             role="progressbar"
+             style="width: {{ confidence }}%">
+            {{ confidence }}%
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if explanation %}
+<div class="explain-card">
+    <h5>🔍 Why this crop was recommended</h5>
+    <ul class="explain-list">
+        {% for item in explanation %}
+        <li>
+            <i class="fa-solid fa-check-circle text-success"></i>
+            <span><b>{{ item.feature | capitalize }}</b> plays a major role</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% if alternatives %}
+<div class="explain-card">
+    <h5>🌾 Other Crops Also Suitable</h5>
+    <ul class="explain-list">
+        {% for alt in alternatives %}
+        <li>
+            <i class="fa-solid fa-seedling text-warning"></i>
+            <span>{{ alt.crop }} – {{ alt.confidence }}%</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <small class="text-muted">
+        These crops also match some of your soil and climate conditions.
+    </small>
+</div>
+{% endif %}
+
+
 
     <img src="{{ image_url }}" 
          class="crop-img"
          onerror="this.src='/static/crop_images/not_found.jpg'">
+   
+
 
     <!-- BUTTONS -->
     <div class="action-buttons">
