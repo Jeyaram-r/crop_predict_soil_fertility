@@ -384,19 +384,20 @@ def recommend_crop():
         )
 
         return jsonify({
-            "redirect_url": url_for(
-                'crop_result',
-                crop=recommended_crop,
-                image_url=image_url,
-                N=N,
-                P=P,
-                K=K,
-                temperature=temperature,
-                humidity=humidity,
-                pH=pH,
-                rainfall=rainfall
-            )
-        })
+        "redirect_url": url_for(
+        'crop_result',
+        crop=recommended_crop,
+        image_url=image_url,
+        N=N,
+        P=P,
+        K=K,
+        temperature=temperature,
+        humidity=humidity,
+        pH=pH,
+        rainfall=rainfall
+    )
+})
+
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
